@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vasco Caramelo — Portefólio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="tabbar">
+  <div class="dots"><span></span><span></span><span></span></div>
+  <button class="menu-toggle" id="menuToggle">☰ ficheiros</button>
+  <a class="tab active" data-target="sobre" href="#sobre">sobre<span class="ext">.md</span></a>
+  <a class="tab" data-target="skills" href="#skills">skills<span class="ext">.json</span></a>
+  <a class="tab" data-target="projetos" href="#projetos">projetos<span class="ext">/</span></a>
+  <a class="tab" data-target="contacto" href="#contacto">contacto<span class="ext">.txt</span></a>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <h6>explorer</h6>
+    <nav id="sideNav">
+      <a href="#sobre" data-target="sobre" class="active"><span class="ico">▸</span>sobre.md</a>
+      <a href="#skills" data-target="skills"><span class="ico">▸</span>skills.json</a>
+      <a href="#projetos" data-target="projetos"><span class="ico">▸</span>projetos/</a>
+      <a href="#contacto" data-target="contacto"><span class="ico">▸</span>contacto.txt</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="file" id="sobre">
+      <div class="gutter" id="gutter-sobre"></div>
+      <div class="content">
+        <div class="eyebrow"><span class="kw">const</span> disponibilidade = <span class="str">"aberto a oportunidades"</span>;</div>
+        <h1>Vasco <span class="accent">Caramelo</span></h1>
+        <div class="role">Estudante de Engenharia Informática @ ISEL</div>
+        <p class="bio">
+          Estou a formar-me em <strong>Engenharia Informática e de Computadores</strong> no ISEL,
+          com foco em desenvolvimento backend e em linguagens como <strong>Kotlin</strong>, Java,
+          JavaScript, SQL e Assembly. Gosto de construir projetos do zero e de perceber
+          como as coisas funcionam por dentro.
+        </p>
+        <div class="hero-links">
+          <a class="btn primary" href="#projetos">ver projetos</a>
+          <a class="btn" href="https://github.com/VascoCaramelo" target="_blank" rel="noopener">github ↗</a>
+          <a class="btn" href="#contacto">contacto</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="file" id="skills">
+      <div class="gutter" id="gutter-skills"></div>
+      <div class="content">
+        <div class="sec-head">
+          <div class="path">~/sobre.md → skills.json</div>
+          <h2>Skills</h2>
+        </div>
+        <div class="skill-groups" id="skillGroups"></div>
+      </div>
+    </section>
+
+    <section class="file" id="projetos">
+      <div class="gutter" id="gutter-projetos"></div>
+      <div class="content">
+        <div class="sec-head">
+          <div class="path">~/ → projetos/</div>
+          <h2>Projetos</h2>
+        </div>
+        <div class="projects-grid" id="projectsGrid"></div>
+      </div>
+    </section>
+
+    <section class="file" id="contacto">
+      <div class="gutter" id="gutter-contacto"></div>
+      <div class="content">
+        <div class="sec-head">
+          <div class="path">~/ → contacto.txt</div>
+          <h2>Contacto</h2>
+        </div>
+        <div class="contact-block" id="contactBlock"></div>
+      </div>
+    </section>
+
+    <footer>// fim do ficheiro — feito à mão, sem frameworks a mais</footer>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
