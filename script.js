@@ -11,25 +11,22 @@ const DADOS = {
     {
       nome: "LEIC42D-G02",
       estado: "em grupo",
-      langColor: "#e8a33d",
       descricao: "Projeto de grupo em Kotlin/JVM com http4k e PostgreSQL, com deploy no Render.",
-      stack: ["kotlin", "http4k", "postgresql", "render"],
+      stack: ["Kotlin", "http4k", "PostgreSQL", "Render"],
       github: "https://github.com/VascoCaramelo",
       demo: ""
     },
     {
       nome: "jpa-optimistic-locking",
       estado: "pessoal",
-      langColor: "#5fd1c0",
       descricao: "Projeto em Java/JPA com EclipseLink e PostgreSQL a implementar controlo de concorrência otimista (optimistic locking).",
-      stack: ["java", "jpa", "eclipselink", "postgresql"],
+      stack: ["Java", "JPA", "EclipseLink", "PostgreSQL"],
       github: "https://github.com/VascoCaramelo",
       demo: ""
     },
     {
       nome: "o-teu-proximo-projeto",
       estado: "por preencher",
-      langColor: "#e2748a",
       descricao: "Substitui isto pela descrição de um projeto teu — o que faz, que problema resolve, o que aprendeste.",
       stack: ["troca", "por", "tags-tuas"],
       github: "",
@@ -45,72 +42,55 @@ const DADOS = {
 };
 /* ========================================================= */
 
-function fillGutter(id, lines){
-  const el = document.getElementById('gutter-' + id);
-  if(!el) return;
-  el.innerHTML = Array.from({length: lines}, (_, i) => `<div>${i+1}</div>`).join('');
-}
-fillGutter('sobre', 9);
-fillGutter('skills', 12);
-fillGutter('projetos', 16);
-fillGutter('contacto', 8);
-
-const skillGroups = document.getElementById('skillGroups');
+// skills
+const skillList = document.getElementById('skillList');
 DADOS.skills.forEach(g => {
-  const div = document.createElement('div');
-  div.className = 'skill-group';
-  div.innerHTML = `
-    <div class="label">// ${g.grupo}</div>
-    <div class="chips">${g.items.map(i => `<span class="chip"><span class="dot"></span>${i}</span>`).join('')}</div>
+  const row = document.createElement('div');
+  row.className = 'skill-row';
+  row.innerHTML = `
+    <div class="cat">${g.grupo}</div>
+    <div class="items">${g.items.map(i => `<span>${i}</span>`).join('')}</div>
   `;
-  skillGroups.appendChild(div);
+  skillList.appendChild(row);
 });
 
-const grid = document.getElementById('projectsGrid');
+// projetos
+const projectList = document.getElementById('projectList');
 DADOS.projetos.forEach(p => {
-  const div = document.createElement('div');
-  div.className = 'proj';
+  const row = document.createElement('div');
+  row.className = 'project-row';
   const links = [];
-  if(p.github) links.push(`<a href="${p.github}" target="_blank" rel="noopener">código ↗</a>`);
-  if(p.demo) links.push(`<a href="${p.demo}" target="_blank" rel="noopener">demo ↗</a>`);
-  div.innerHTML = `
-    <div class="proj-top">
-      <div class="proj-name"><span class="lang-dot" style="background:${p.langColor}"></span>${p.nome}</div>
-      <div class="proj-status">${p.estado}</div>
-    </div>
-    <div class="proj-desc">${p.descricao}</div>
-    <div class="proj-meta">
+  if(p.github) links.push(`<a href="${p.github}" target="_blank" rel="noopener">Código ↗</a>`);
+  if(p.demo) links.push(`<a href="${p.demo}" target="_blank" rel="noopener">Demo ↗</a>`);
+  row.innerHTML = `
+    <div class="proj-main">
+      <div class="proj-name">${p.nome}<span class="proj-status">${p.estado}</span></div>
+      <div class="proj-desc">${p.descricao}</div>
       <div class="proj-stack">${p.stack.map(s => `<span>${s}</span>`).join('')}</div>
-      <div class="proj-links">${links.join('')}</div>
     </div>
+    <div class="proj-links">${links.join('')}</div>
   `;
-  grid.appendChild(div);
+  projectList.appendChild(row);
 });
 
+// contacto
+const contactList = document.getElementById('contactList');
 const c = DADOS.contacto;
-document.getElementById('contactBlock').innerHTML = `
-  <div class="line"><span class="k">email</span>  = <span class="v"><a href="mailto:${c.email}">${c.email}</a></span></div>
-  <div class="line"><span class="k">github</span> = <span class="v"><a href="${c.github}" target="_blank" rel="noopener">${c.github.replace('https://','')}</a></span></div>
-  ${c.linkedin ? `<div class="line"><span class="k">linkedin</span> = <span class="v"><a href="${c.linkedin}" target="_blank" rel="noopener">${c.linkedin.replace('https://','')}</a></span></div>` : ''}
-  <div class="line"><span class="k">local</span>  = <span class="v">${c.localizacao}</span></div>
-`;
+const rows = [
+  { k: 'Email', v: c.email, href: `mailto:${c.email}` },
+  { k: 'GitHub', v: c.github.replace('https://',''), href: c.github },
+];
+if(c.linkedin) rows.push({ k: 'LinkedIn', v: c.linkedin.replace('https://',''), href: c.linkedin });
+rows.push({ k: 'Localização', v: c.localizacao, href: null });
 
-const sections = document.querySelectorAll('.file');
-const navLinks = document.querySelectorAll('#sideNav a');
-const tabs = document.querySelectorAll('.tab');
+rows.forEach(r => {
+  const row = document.createElement('div');
+  row.className = 'contact-row';
+  row.innerHTML = `
+    <span class="k">${r.k}</span>
+    <span class="v">${r.href ? `<a href="${r.href}" target="_blank" rel="noopener">${r.v}</a>` : r.v}</span>
+  `;
+  contactList.appendChild(row);
+});
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      const id = entry.target.id;
-      navLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
-      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === id));
-    }
-  });
-}, { rootMargin: '-40% 0px -50% 0px' });
-sections.forEach(s => observer.observe(s));
-
-const sidebar = document.getElementById('sidebar');
-const menuToggle = document.getElementById('menuToggle');
-menuToggle?.addEventListener('click', () => sidebar.classList.toggle('open'));
-navLinks.forEach(a => a.addEventListener('click', () => sidebar.classList.remove('open')));
+document.getElementById('year').textContent = new Date().getFullYear();
